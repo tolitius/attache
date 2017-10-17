@@ -11,6 +11,16 @@ consulToMap(ConsulSpec{"consulHost:8500", "datacenterName", "token or empty stri
 
 returns a `map[string][]byte` of all the `k/v` under the `rootPath`.
 
+`ConsulSpec` struct is:
+
+```go
+type ConsulSpec struct {
+	Address    string
+	Datacenter string
+	Token      string
+}
+```
+
 ## Show me
 
 Say we have this structure in Consul at `localhost:8500` and datacenter named `dc1`:
