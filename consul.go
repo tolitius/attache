@@ -13,7 +13,7 @@ type ConsulSpec struct {
 	Token      string
 }
 
-func consulToMap(consulSpec ConsulSpec, rootPath string) map[string][]byte {
+func ConsulToMap(consulSpec ConsulSpec, rootPath string) map[string][]byte {
 
 	consulConfig := consulapi.DefaultConfig()
 	consulConfig.Address = consulSpec.Address

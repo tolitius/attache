@@ -5,7 +5,7 @@
 Interop between Consul API and Go maps:
 
 ```go
-consulToMap(ConsulSpec{"consulHost:8500", "datacenterName", "token or empty string"},
+ConsulToMap(ConsulSpec{"consulHost:8500", "datacenterName", "token or empty string"},
             "rootPath")
 ```
 
@@ -37,7 +37,7 @@ Say we have this structure in Consul at `localhost:8500` and datacenter named `d
 attaché could read it all into a Go map by:
 
 ```go
-consulToMap(ConsulSpec{"locahost:8500", "dc1", ""},
+ConsulToMap(ConsulSpec{"locahost:8500", "dc1", ""},
             "hubble")
 ```
 
