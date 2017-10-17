@@ -1,4 +1,4 @@
-package main
+package attache
 
 import (
 	"fmt"
@@ -46,8 +46,4 @@ func ConsulToMap(consulSpec ConsulSpec, rootPath string) map[string]string {
 	}
 
 	return config
-}
-
-func main() {
-	ConsulToMap(ConsulSpec{"dev-server:8500", "riltok", ""}, "conan-doyle")
 }
