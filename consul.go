@@ -1,4 +1,4 @@
-package consul
+package main
 
 import (
 	"fmt"
@@ -13,7 +13,7 @@ type ConsulSpec struct {
 	Token      string
 }
 
-func ConsulToMap(consulSpec ConsulSpec, rootPath string) map[string][]byte {
+func ConsulToMap(consulSpec ConsulSpec, rootPath string) map[string]string {
 
 	consulConfig := consulapi.DefaultConfig()
 	consulConfig.Address = consulSpec.Address
@@ -28,7 +28,7 @@ func ConsulToMap(consulSpec ConsulSpec, rootPath string) map[string][]byte {
 
 	kv := consul.KV()
 
-	config := make(map[string][]byte)
+	config := make(map[string]string)
 
 	kvps, _, err := kv.List(rootPath, nil)
 	if err != nil {
@@ -37,7 +37,7 @@ func ConsulToMap(consulSpec ConsulSpec, rootPath string) map[string][]byte {
 
 	for _, kvp := range kvps {
 		if val := kvp.Value; val != nil {
-			config[kvp.Key] = val
+			config[kvp.Key] = string(val[:])
 		}
 	}
 
@@ -46,4 +46,8 @@ func ConsulToMap(consulSpec ConsulSpec, rootPath string) map[string][]byte {
 	}
 
 	return config
+}
+
+func main() {
+	ConsulToMap(ConsulSpec{"dev-server:8500", "riltok", ""}, "conan-doyle")
 }

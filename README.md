@@ -9,7 +9,7 @@ ConsulToMap(ConsulSpec{"consulHost:8500", "datacenterName", "token or empty stri
             "rootPath")
 ```
 
-returns a `map[string][]byte` of all the `k/v` under the `rootPath`.
+returns a `map[string]string` of all the `k/v` under the `rootPath`.
 
 `ConsulSpec` struct is:
 
@@ -49,7 +49,7 @@ will produce a Go map:
  "hubble/mission/target": "Horsehead Nebula"}
 ```
 
-where keys are `[]byte`
+where keys are `string`s
 
 ## License
 
