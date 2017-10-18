@@ -19,7 +19,7 @@ go get github.com/tolitius/attache
 ## Map to Consul
 
 ```go
-attache.MapToConsul(ConsulSpec{"consulHost:8500", "datacenterName", "token"},
+attache.MapToConsul(attache.ConsulSpec{"consulHost:8500", "datacenterName", "token"},
                     configMap)
 ```
 
@@ -36,7 +36,7 @@ For exampe let's say we have a `configMap` Go map:
 attaché could write all these entries into Consul respecting `/` hierarchy:
 
 ```go
-attache.MapToConsul(ConsulSpec{Address: "locahost:8500"}, configMap)
+attache.MapToConsul(attache.ConsulSpec{Address: "locahost:8500"}, configMap)
 ```
 
 will bring Hubble "online" preserving config's hierarchy:
@@ -54,7 +54,7 @@ and you can see the Consul log confirming it:
 ## Consul to Map
 
 ```go
-attache.ConsulToMap(ConsulSpec{"consulHost:8500", "datacenterName", "token or empty string"},
+attache.ConsulToMap(attache.ConsulSpec{"consulHost:8500", "datacenterName", "token or empty string"},
                     "rootPath")
 ```
 
@@ -74,7 +74,7 @@ For exampe let's say we have this structure in Consul at `localhost:8500`:
 attaché could read it all into a Go map by:
 
 ```go
-attache.ConsulToMap(ConsulSpec{Address: "locahost:8500"},
+attache.ConsulToMap(attache.ConsulSpec{Address: "locahost:8500"},
                     "/hubble")
 ```
 
@@ -110,7 +110,7 @@ so other options could be provided, for example:
 
 
 ```go
-attache.MapToConsul(ConsulSpec{"localhost:8500", "fn42-datacenter", "7a0f3b39-8871-e16e-2101-c1b30a911883"},
+attache.MapToConsul(attache.ConsulSpec{"localhost:8500", "fn42-datacenter", "7a0f3b39-8871-e16e-2101-c1b30a911883"},
                     configMap)
 ```
 
