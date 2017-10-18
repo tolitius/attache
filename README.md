@@ -1,5 +1,7 @@
 # attaché
 
+is a younger brother of [envoy](https://github.com/tolitius/envoy) that makes a bridge between Consul and application data structures a little more beautiful.
+
 - [How to play](#how-to-play)
 - [Map to Consul](#map-to-consul)
 - [Consul to Map](#consul-to-map)
@@ -21,7 +23,7 @@ attache.MapToConsul(ConsulSpec{"consulHost:8500", "datacenterName", "token"},
                     configMap)
 ```
 
-takes a configMap, which is a `map[string]string`, and inserts all the {key, value} pairs into Consul
+takes a configMap, which is a `map[string]string`, and inserts all the {key, value} pairs into Consul.
 
 For exampe let's say we have a `configMap` Go map:
 
@@ -39,7 +41,7 @@ attache.MapToConsul(ConsulSpec{Address: "locahost:8500"}, configMap)
 
 will bring Hubble "online" preserving config's hierarchy:
 
-<p align="center"><img src="doc/img/to-consul.png"></p>
+<p align="center"><img src="doc/img/to-consul.png" width="600px"></p>
 
 and you can see the Consul log confirming it:
 
