@@ -41,7 +41,7 @@ ConsulToMap(ConsulSpec{"locahost:8500", "dc1", ""},
             "hubble")
 ```
 
-will produce a Go map:
+which would produce a Go map:
 
 ```go
 {"hubble/store": "spacecraft://tape"
@@ -49,7 +49,7 @@ will produce a Go map:
  "hubble/mission/target": "Horsehead Nebula"}
 ```
 
-where keys are `string`s
+where keys and values are `string`s
 
 ## License
 
