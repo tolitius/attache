@@ -1,6 +1,7 @@
 # attaché
+[![GoDoc](https://godoc.org/github.com/tolitius/attache?status.svg)](https://godoc.org/github.com/tolitius/attache)
 
-is a younger brother of [envoy](https://github.com/tolitius/envoy) that makes a bridge between Consul and application data structures a little more beautiful.
+is a younger brother of [envoy](https://github.com/tolitius/envoy) and it makes a bridge between Consul and application data structures a little more beautiful.
 
 - [How to play](#how-to-play)
 - [Map to Consul](#map-to-consul)
