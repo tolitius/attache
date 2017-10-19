@@ -3,11 +3,14 @@ package attache
 import (
 	"reflect"
 	"testing"
+
+	consulapi "github.com/hashicorp/consul/api"
 )
 
 func TestOutFail(t *testing.T) {
 
-	spec := ConsulSpec{Address: "answer-is-not-always:42"}
+	spec := consulapi.DefaultConfig()
+	spec.Address = "answer-is-not-always:42"
 
 	_, err := ConsulToMap(spec, "/hubble")
 
@@ -19,7 +22,8 @@ func TestOutFail(t *testing.T) {
 
 func TestInFail(t *testing.T) {
 
-	spec := ConsulSpec{Address: "answer-is-not-always:42"}
+	spec := consulapi.DefaultConfig()
+	spec.Address = "answer-is-not-always:42"
 
 	toConsul := make(map[string]string)
 	toConsul["foo"] = "bar"
@@ -34,7 +38,8 @@ func TestInFail(t *testing.T) {
 
 func TestInAndOut(t *testing.T) {
 
-	spec := ConsulSpec{Address: "localhost:8500"}
+	spec := consulapi.DefaultConfig()
+	spec.Address = "localhost:8500"
 
 	toConsul := make(map[string]string)
 
@@ -42,8 +47,15 @@ func TestInAndOut(t *testing.T) {
 	toConsul["hubble/camera/mode"] = "color"
 	toConsul["hubble/mission/target"] = "Horsehead Nebula"
 
-	duration, _ := MapToConsul(spec, toConsul)
-	fromConsul, _ := ConsulToMap(spec, "/hubble")
+	duration, err := MapToConsul(spec, toConsul)
+	if err != nil {
+		t.Errorf("could not write map to consul due to: %v", err)
+	}
+
+	fromConsul, err := ConsulToMap(spec, "/hubble")
+	if err != nil {
+		t.Errorf("could not write map to consul due to: %v", err)
+	}
 
 	t.Logf("writing to Consul took: %v", duration)
 
