@@ -54,20 +54,20 @@ func MapToConsul(consulSpec *consulapi.Config, config map[string]string) (time.D
 
 	consul, err := consulapi.NewClient(consulSpec)
 	if err != nil {
-		return -1, err
+		return 0, err
 	}
 
 	kv := consul.KV()
 
-	var duration int64
+	var duration time.Duration
 
 	for k, v := range config {
 		took, err := kv.Put(&consulapi.KVPair{Key: k, Value: []byte(v)}, nil)
 		if err != nil {
-			return -1, fmt.Errorf("could not put a key, value: {%s, %s} to consul %+v due to %v", k, v, consulSpec, err)
+			return 0, fmt.Errorf("could not put a key, value: {%s, %s} to consul %+v due to %v", k, v, consulSpec, err)
 		}
-		duration += int64(took.RequestTime)
+		duration += took.RequestTime
 	}
 
-	return time.Duration(duration), nil
+	return duration, nil
 }
