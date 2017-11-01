@@ -114,7 +114,7 @@ the last _optional_ argument is a boolean `keysWithOffset` which we could pass a
 config := consulapi.DefaultConfig()
 config.Address = "localhost:8500"
 
-attache.ConsulToMap(config, "/hubble")
+attache.ConsulToMap(config, "/hubble", false)
 ```
 
 which would produce a Go map:
