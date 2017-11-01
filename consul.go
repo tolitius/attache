@@ -7,6 +7,7 @@ package attache
 import (
 	"fmt"
 	"log"
+	"strings"
 	"time"
 
 	consulapi "github.com/hashicorp/consul/api"
@@ -16,7 +17,7 @@ import (
 // Connects to consul "key/value".
 // Reads all (i.e. "recurse") {k, v} pairs under the path offset
 // into a map[string]string preserving path hierarchy in map keys: i.e. {"universe/answers/main": "42"}
-func ConsulToMap(consulSpec *consulapi.Config, offset string) (map[string]string, error) {
+func ConsulToMap(consulSpec *consulapi.Config, offset string, keysWithOffset ...bool) (map[string]string, error) {
 
 	consul, err := consulapi.NewClient(consulSpec)
 	if err != nil {
@@ -32,12 +33,22 @@ func ConsulToMap(consulSpec *consulapi.Config, offset string) (map[string]string
 		return nil, fmt.Errorf("failed to fetch k/v pairs from consul: %+v, path offset: %s. due to %v", consulSpec, offset, err)
 	}
 
+	withOffset := true
+	if len(keysWithOffset) > 0 {
+		withOffset = keysWithOffset[0]
+	}
+
 	for _, kvp := range kvps {
 		if val := kvp.Value; val != nil {
-			config[kvp.Key] = string(val[:])
+			k := kvp.Key
+			if !withOffset {
+				k = strings.Split(kvp.Key, offset)[1]
+			}
+			config[k] = string(val[:])
 		}
 	}
 
+	log.Printf("read consul map at offset: /%s\n", offset)
 	for k, v := range config {
 		log.Printf("read consul map entry: {:%s, %s}\n", k, v)
 	}

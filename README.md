@@ -6,6 +6,7 @@ is a younger brother of [envoy](https://github.com/tolitius/envoy) and it makes 
 - [How to play](#how-to-play)
 - [Map to Consul](#map-to-consul)
 - [Consul to Map](#consul-to-map)
+  - [Keys with Offset](#keys-with-offset)
 - [Options](#options)
 - [License](#license)
 
@@ -74,7 +75,6 @@ For exampe let's say we have this structure in Consul at `localhost:8500`:
 attaché could read it all into a Go map by:
 
 ```go
-
 config := consulapi.DefaultConfig()
 config.Address = "localhost:8500"
 
@@ -96,6 +96,36 @@ It will do that by calling Consul once (i.e. one GET), starting from the path of
 ```log
 2017/10/18 15:21:53 [DEBUG] http: Request GET /v1/kv/hubble?recurse= (214.843µs) from=127.0.0.1:59378
 ```
+
+### Keys with Offset
+
+When working with several environments, application configs could live under different env specisfic offsets, for example `/dev` or `/qa`, etc.
+
+By default attaché returns a map with keys that include a full path starting from the root. Frequently applications should not care
+about this difference in env specific offsets, hence we can ask attaché to exclude offset from key names:
+
+```go
+attache.ConsulToMap(consulapi.DefaultConfig(), pathOffset, keysWithOffset)
+```
+
+the last _optional_ argument is a boolean `keysWithOffset` which we could pass as `false`
+
+```go
+config := consulapi.DefaultConfig()
+config.Address = "localhost:8500"
+
+attache.ConsulToMap(config, "/hubble")
+```
+
+which would produce a Go map:
+
+```go
+{"/store": "spacecraft://tape"
+ "/camera/mode": "color"
+ "/mission/target": "Horsehead Nebula"}
+```
+
+notice no `"hubble"` offset in key names.
 
 ## Options
 
