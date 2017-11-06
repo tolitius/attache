@@ -129,9 +129,8 @@ notice no `"hubble"` offset in key names.
 
 ## Options
 
-attache relies on the official [Consul API](https://godoc.org/github.com/hashicorp/consul/api) and all attache functions take
-[consul/api.Config](https://godoc.org/github.com/hashicorp/consul/api#Config), hence any of its options can be set either via ENV variables
-or by overriding the config:
+attaché relies on the official [Consul API](https://godoc.org/github.com/hashicorp/consul/api) and all attaché functions take
+[consul/api.Config](https://godoc.org/github.com/hashicorp/consul/api#Config), hence any of its options can be set either by overriding the config:
 
 ```go
 consulConfig := consulapi.DefaultconsulConfig()
@@ -141,6 +140,8 @@ consulConfig.Token = "7a0f3b39-8871-e16e-2101-c1b30a911883"
 
 appConfig := attache.ConsulToMap(consulConfig, "/hubble")
 ```
+
+Or by using "official" [ENV variables](https://github.com/hashicorp/consul/blob/720fdbd10af00c12151fd8d8f8490d131dcce168/api/api.go#L24-L64) from Consul API.
 
 ## License
 
