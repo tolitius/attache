@@ -49,8 +49,24 @@ func ConsulToMap(consulSpec *consulapi.Config, offset string, keysWithOffset ...
 	}
 
 	log.Printf("read consul map at offset: /%s\n", offset)
+
+	excludeList := []string{"password", "secret", "auth"}
 	for k, v := range config {
-		log.Printf("read consul map entry: {:%s, %s}\n", k, v)
+		_, found := func(slice []string, key string) (int, bool) {
+			for i, item := range slice {
+				search := strings.Contains(key, item)
+				if search != false {
+					return i, true
+				}
+			}
+			return -1, false
+		}(excludeList, k)
+
+		if !found {
+			fmt.Printf("read consul map entry: {:%s, %s }\n", k, v)
+		} else {
+			fmt.Printf("read consul map entry: {:%s, %s }\n", k, "*******")
+		}
 	}
 
 	return config, nil
